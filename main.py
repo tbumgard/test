@@ -18,16 +18,19 @@ def valid_num_guesses_input(user_input):
     if guesses < 1:
         raise ValueError    
     return guesses
+
 def valid_num_players_input(user_input):            
     num_players = int(user_input)
     if num_players < 2:
         raise ValueError
     return num_players
+
 def valid_word_to_guess_input(user_input):
     word_to_guess = user_input.lower()
     if not word_to_guess.isalpha():
         raise ValueError  
     return word_to_guess
+
 def valid_guess_letter_input(*args):
     guess_letter, guessed_letters = args
     guess_letter = guess_letter.lower()
@@ -38,6 +41,7 @@ def valid_guess_letter_input(*args):
     ):
         raise ValueError
     return guess_letter
+
 def valid_play_again_response_input(user_input):
     play_again_response = user_input.lower()
     if (
@@ -60,12 +64,12 @@ def main():
                               "Invalid input. Please enter a valid integer at least greater than 1")
 
     guessed_letters = "abcdefghijklmnop"
+    
     # input the word_to_guess - valid input string with size greater than 1 with out any non-alpha chars that has been lowered()
     word_to_guess = valid_input("Please enter the word to guess: ", valid_word_to_guess_input,
                                 "Please enter a word at least 1 letter long with out any non-alpha characters")
 
     # input a letter from the guessing_player, validate it is an alpha character that has been lowered() and stored in guess_letter
-    
     '''guess_letter = valid_input("Trevor please guess a letter:", valid_guess_letter_input("z", guessed_letters),
                                f"Please enter a valid character (a-z) that hasn't been guessed yet.\nGuessed  Letters: guessed_letters\nRevealed Letters: revealed_letters\nGuesses left: guesses_left")'''
     

@@ -1,4 +1,4 @@
-import os
+'''import os
 
 def valid_input(input_prompt, validate_func, value_error_msg):
     valid = False  
@@ -61,7 +61,7 @@ def not_valid_option(user_input, option_list = []):
         return i, True
     return i, False
 
-'''OLD CODE
+OLD CODE
 def valid_num_guesses_input(user_input):
     guesses = int(user_input)
     print(guesses==None)
@@ -102,7 +102,7 @@ def valid_play_again_response_input(user_input):
     ):
         raise ValueError
     return play_again_response
-'''
+
 
 def main():
     
@@ -140,5 +140,111 @@ def main():
     print(f"Word to guess: {word_to_guess}")
     print(f"Guessed letter: {guess_letter}")
     print(f"Play again response: {play_again_response} {play_again}")    
+
+main()'''
+
+class Graph:          
+    def bfs_path(self, start, end):
+        path_to_end = self.breadth_first_search(start)
+        shortest_path = []
+        
+        if end not in path_to_end:
+            return None
+        
+        path_index = path_to_end.index(end)
+        previous_index = path_index - 1
+        while path_index != 0:
+            if path_to_end[path_index] in self.graph[path_to_end[previous_index]]:
+                shortest_path.append(path_to_end[path_index])
+                path_index = previous_index
+
+            previous_index -= 1
+        
+        shortest_path.append(path_to_end[path_index])
+      
+        return shortest_path[::-1]
+  
+    # don't touch below this line
+
+    def breadth_first_search(self, v):
+        visited = []
+        to_visit = []
+        to_visit.append(v)
+        while to_visit:
+            s = to_visit.pop(0)
+            visited.append(s)
+            sorted_neighbours = sorted(self.graph[s])
+            for neighbour in sorted_neighbours:
+                if neighbour not in visited and neighbour not in to_visit:
+                    to_visit.append(neighbour)
+        return visited
+
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, u, v):
+        if u in self.graph.keys():
+            self.graph[u].add(v)
+        else:
+            self.graph[u] = set([v])
+        if v in self.graph.keys():
+            self.graph[v].add(u)
+        else:
+            self.graph[v] = set([u])
+
+    def __repr__(self):
+        result = ""
+        for key in self.graph.keys():
+            result += f"Vertex: '{key}'\n"
+            for v in sorted(self.graph[key]):
+                result += f"has an edge leading to --> {v} \n"
+        return result
+
+
+def test(edges_to_add, from_vertex, to_vertex):
+    graph = Graph()
+    for edge in edges_to_add:
+        graph.add_edge(edge[0], edge[1])
+        print(f"Added edge: {edge}")
+    path = graph.bfs_path(from_vertex, to_vertex)
+    print("-------------------------------------")
+    print(f"Path from {from_vertex} to {to_vertex}: {path}")
+    print("=====================================")
+
+
+def main():
+    test(
+        [
+            ("New York", "London"),
+            ("New York", "Cairo"),
+            ("New York", "Tokyo"),
+            ("London", "Dubai"),
+            ("Cairo", "Kyiv"),
+            ("Cairo", "Madrid"),
+            ("London", "Madrid"),
+            ("Buenos Aires", "New York"),
+            ("Tokyo", "Buenos Aires"),
+            ("Kyiv", "San Francisco"),
+        ],
+        "Cairo",
+        "San Francisco",
+    )
+    test(
+        [
+            ("New York", "London"),
+            ("New York", "Cairo"),
+            ("New York", "Tokyo"),
+            ("London", "Dubai"),
+            ("Cairo", "Kyiv"),
+            ("Cairo", "Madrid"),
+            ("London", "Madrid"),
+            ("Buenos Aires", "New York"),
+            ("Tokyo", "Buenos Aires"),
+            ("Kyiv", "San Francisco"),
+        ],
+        "New York",
+        "Dubai",
+    )
+
 
 main()

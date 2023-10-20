@@ -1,1 +1,3 @@
 /Makefile
+/__pycache__
+/sql_app/__pycache__/
